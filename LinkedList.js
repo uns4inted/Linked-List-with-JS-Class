@@ -21,16 +21,22 @@ class LinkedList {
 
   // Operations on the linked list
   append(value) {
+    // Create a new node with the specified value
     const newNode = new Node(value);
+    // Update the tail to point to the new node
     this.tail.next = newNode;
     this.tail = newNode;
+
     this.length++;
     return this;
   }
   prepend(value) {
+    // Create a new node with the specified value
     const newNode = new Node(value);
+    // Update the new node's next pointer to point to the current head
     newNode.next = this.head;
     this.head = newNode;
+    
     this.length++;
     return this;
   }
@@ -50,6 +56,28 @@ class LinkedList {
     prevNode.next = newNode;
 
     this.length++;
+
+    return this;
+  }
+  remove(index) {
+    // If the index is greater than or equal to the length of the list, do nothing
+    if (index >= this.length) return this;
+    // If the index is 0, remove the first element
+    if (index === 0) {
+      this.head = this.head.next;
+      this.length--;
+      return this;
+    }
+
+    // Find the previous and next nodes at the specified index
+    let prevNode = this._getPrevNode(index);
+    let nextNode = prevNode.next.next;
+
+    // Remove the node at the specified index
+    prevNode.next = nextNode;
+
+    this.length--;
+    return this;
   }
 
 
@@ -88,6 +116,10 @@ myLinkedList.prepend('Tarp has sprung a leak');
 // Insert a new element at a specific index
 myLinkedList.insert(2, 'Have all become my pets');
 myLinkedList.insert(0, 'Underneath the bridge');
+
+// Remove an element at a specific index
+myLinkedList.remove(4);
+myLinkedList.remove(4);
 
 //Print the list
 console.log(myLinkedList.printList());
