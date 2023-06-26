@@ -34,6 +34,23 @@ class LinkedList {
     this.length++;
     return this;
   }
+  insert(index, value) {
+    // If the index is greater than or equal to the length of the list, append the value to the end
+    if (index >= this.length) return this.append(value);
+    // If the index is 0, prepend the value to the beginning
+    if (index === 0) return this.prepend(value);
+
+    // Find the previous and next nodes at the specified index
+    let prevNode = this._getPrevNode(index);
+    let nextNode = prevNode.next;
+
+    // Create a new node with the specified value and insert it between the previous and next nodes
+    let newNode = new Node(value);
+    newNode.next = nextNode;
+    prevNode.next = newNode;
+
+    this.length++;
+  }
 
 
   // Helper functions
@@ -46,6 +63,13 @@ class LinkedList {
     }
     return array;
   }
+  _getPrevNode(index) {
+    let currentNode = this.head;
+    for (let i = 0; i < index - 1; i++) {
+      currentNode = currentNode.next;
+    }
+    return currentNode;
+  }
 }
 
 // Usage example:
@@ -55,11 +79,15 @@ let myLinkedList = new LinkedList(42);
 
 // Append a new element to the end of the list
 myLinkedList.append(10);
-myLinkedList.append('Somtheing in the way');
+myLinkedList.append('And I\'m living off of grass');
 
 // Prepend a new element to the beginning of the list
-myLinkedList.prepend('Yeah');
-myLinkedList.prepend('Mmm-mmm');
+myLinkedList.prepend('And the animals I\'ve trapped');
+myLinkedList.prepend('Tarp has sprung a leak');
+
+// Insert a new element at a specific index
+myLinkedList.insert(2, 'Have all become my pets');
+myLinkedList.insert(0, 'Underneath the bridge');
 
 //Print the list
 console.log(myLinkedList.printList());
