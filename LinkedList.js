@@ -36,7 +36,7 @@ class LinkedList {
     // Update the new node's next pointer to point to the current head
     newNode.next = this.head;
     this.head = newNode;
-    
+
     this.length++;
     return this;
   }
@@ -91,6 +91,28 @@ class LinkedList {
     }
     return array;
   }
+  get(index) {
+    if(index >= this.length) return undefined;
+    // Return head or tail if index is 0 or length - 1
+    if(index === 0) return this.head.value;
+    if(index === this.length - 1) return this.tail.value;
+
+    // Find the node at the specified index
+    let currentNode = this._getPrevNode(index).next; // TODO: can be optimized to not use _getPrevNode
+    return currentNode.value;
+  }
+  indexOf(value) {
+    // Use a loop to find the index of the node with the specified value
+    let currentNode = this.head;
+    for (let i = 0; i <= this.length - 1; i++) {
+      // Return the index if the value is found
+      if(currentNode.value === value) return i;
+      currentNode = currentNode.next;
+    }
+    // Return -1 if the value is not found
+    return -1;
+  }
+
   _getPrevNode(index) {
     let currentNode = this.head;
     for (let i = 0; i < index - 1; i++) {
@@ -120,6 +142,13 @@ myLinkedList.insert(0, 'Underneath the bridge');
 // Remove an element at a specific index
 myLinkedList.remove(4);
 myLinkedList.remove(4);
+
+// Get the value of an element at a specific index
+console.log(myLinkedList.get(0));
+
+// Get the index of an element with a specific value
+console.log(myLinkedList.indexOf('Have all become my pets'));
+console.log(myLinkedList.indexOf(42));
 
 //Print the list
 console.log(myLinkedList.printList());
